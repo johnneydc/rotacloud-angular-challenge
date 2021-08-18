@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Role} from './role';
-import {concatMap, tap} from 'rxjs/operators';
+import {concatMap, map, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {User} from '../users/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolesService {
 
-  private roles: BehaviorSubject<Role[]> = new BehaviorSubject<Role[]>(null);
-
   private readonly ROLES_URL = 'https://custom.rotacloud.com/angular-challenge/roles.json';
+  private roles = new BehaviorSubject<Role[]>(null);
 
   constructor(
     private readonly httpClient: HttpClient
@@ -40,5 +40,22 @@ export class RolesService {
       roles[indexOfRoleToUpdate] = updatedRole;
 
       this.roles.next(roles);
+  }
+
+  getRolesForUser(user: User): Observable<Role[]> {
+    return this.getRoles()
+      .pipe(map(this.filterRolesBasedUser(user)));
+  }
+
+  private filterRolesBasedUser(user: User) {
+    return function (roles: Role[]) {
+      return roles.filter(role => {
+        if (user.roles === null) {
+          return false;
+        }
+
+        return user.roles.includes(role.id);
+      });
+    };
   }
 }

@@ -9,37 +9,9 @@
 		<td>{{ role.id }}</td>
 		<td><input type="text" [(ngModel)]="role.name" (ngModelChange)="updateRole(role)" [style.color]="role.colour"></td>
 		<td>
-			<div class="tag">Ben Jenkins</div>
-			<div class="tag">Russell Brandon</div>
+			<div *ngFor="let userName of getUserNames(role) | async" class="tag">
+        {{ userName }}
+      </div>
 		</td>
 	</tr>
-<!--	<tr>-->
-<!--		<td>4</td>-->
-<!--		<td><input type="text" value="Cleaner" [style.color]="'#60c1a5'"></td>-->
-<!--		<td>-->
-<!--			<div class="tag">Russell Brandon</div>-->
-<!--		</td>-->
-<!--	</tr>-->
-<!--	<tr>-->
-<!--		<td>1</td>-->
-<!--		<td><input type="text" value="FOH" [style.color]="'#6798d0'"></td>-->
-<!--		<td>-->
-<!--			<div class="tag">David Charlwood</div>-->
-<!--			<div class="tag">Jose Broadbent</div>-->
-<!--		</td>-->
-<!--	</tr>-->
-<!--	<tr>-->
-<!--		<td>2</td>-->
-<!--		<td><input type="text" value="Kitchen" [style.color]="'#ef7150'"></td>-->
-<!--		<td>-->
-<!--			<div class="tag">Russell Brandon</div>-->
-<!--		</td>-->
-<!--	</tr>-->
-<!--	<tr>-->
-<!--		<td>3</td>-->
-<!--		<td><input type="text" value="Reception" [style.color]="'#fbd142'"></td>-->
-<!--		<td>-->
-<!--			<div class="tag">David Charlwood</div>-->
-<!--		</td>-->
-<!--	</tr>-->
 </table>
