@@ -37,8 +37,7 @@ export class RolesComponent implements OnInit {
   }
 
   private sortByName() {
-    return (roles: Role[]) => {
-      return roles.sort((roleA, roleB) => roleA.name.localeCompare(roleB.name));
-    };
+    return (roles: Role[]) =>
+      roles.sort((roleA, roleB) => roleA.name.localeCompare(roleB.name));
   }
 }

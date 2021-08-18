@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UsersService} from './users.service';
 import {Observable} from 'rxjs';
 import {User} from './user';
@@ -43,8 +43,6 @@ export class UsersComponent implements OnInit {
   }
 
   private sortByName() {
-    return (users: User[]) => {
-      return users.sort((userA, userB) => userA.name.localeCompare(userB.name));
-    };
+    return users => users.sort((userA, userB) => userA.name.localeCompare(userB.name));
   }
 }

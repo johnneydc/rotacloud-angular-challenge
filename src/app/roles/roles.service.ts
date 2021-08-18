@@ -44,18 +44,16 @@ export class RolesService {
 
   getRolesForUser(user: User): Observable<Role[]> {
     return this.getRoles()
-      .pipe(map(this.filterRolesBasedUser(user)));
+      .pipe(map(roles => this.filterRolesBasedUser(roles, user)));
   }
 
-  private filterRolesBasedUser(user: User) {
-    return function (roles: Role[]) {
-      return roles.filter(role => {
-        if (user.roles === null) {
-          return false;
-        }
+  private filterRolesBasedUser(roles: Role[], user: User) {
+    return roles.filter(role => {
+      if (user.roles === null) {
+        return false;
+      }
 
-        return user.roles.includes(role.id);
-      });
-    };
+      return user.roles.includes(role.id);
+    });
   }
 }

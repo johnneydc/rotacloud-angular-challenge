@@ -22,19 +22,6 @@ export class UsersService {
       .pipe(concatMap(this.loadFromHttpIfNotExisting()));
   }
 
-  public getUsersWithRole(role: Role): Observable<User[]> {
-    return this.getUsers()
-      .pipe(map(users => {
-        return users.filter(user => {
-          if (user.roles != null) {
-            return user.roles.includes(role.id);
-          } else {
-            return false;
-          }
-        });
-      }));
-  }
-
   private loadFromHttpIfNotExisting() {
     return (users: User[]) => {
       if (users != null) {
@@ -46,12 +33,29 @@ export class UsersService {
     };
   }
 
-  updateUser(updatedUser: User): void {
+  public getUsersWithRole(role: Role): Observable<User[]> {
+    return this.getUsers()
+      .pipe(
+        map(users => this.filterByRole(users, role))
+      );
+  }
+
+  public updateUser(updatedUser: User): void {
     const updatedUsers = this.users.value.slice();
     const indexOfRoleToUpdate = updatedUsers.findIndex(user => user.id === updatedUser.id);
 
     updatedUsers[indexOfRoleToUpdate] = updatedUser;
 
     this.users.next(updatedUsers);
+  }
+
+  private filterByRole(users: User[], role: Role) {
+    return users.filter(user => {
+      if (user.roles === null) {
+        return false;
+      }
+
+      return user.roles.includes(role.id);
+    });
   }
 }
