@@ -7,7 +7,7 @@
 	</thead>
 	<tr *ngFor="let user of users$ | async">
 		<td>{{ user.id }}</td>
-		<td><input type="text" [(ngModel)]="user.name" (ngModelChange)="updateUser(user)"></td>
+		<td><input type="text" [(ngModel)]="user.name" (keyup)="updateUser(user)"></td>
 		<td>
 			<div *ngFor="let role of getRoles(user) | async" class="tag" [style.background-color]="role.colour">
         {{ role.name }}
