@@ -20,7 +20,8 @@ export class RolesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.roles$ = this.rolesService.getRoles();
+    this.roles$ = this.rolesService.getRoles()
+      .pipe(map(this.sortByName()));
   }
 
   updateRole(role: Role): void {
@@ -33,5 +34,11 @@ export class RolesComponent implements OnInit {
         return users.map(user => user.name)
           .sort((userNameA, userNameB) => userNameA.localeCompare(userNameB));
       }));
+  }
+
+  private sortByName() {
+    return (roles: Role[]) => {
+      return roles.sort((roleA, roleB) => roleA.name.localeCompare(roleB.name));
+    };
   }
 }

@@ -21,7 +21,8 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.users$ = this.usersService.getUsers();
+    this.users$ = this.usersService.getUsers()
+      .pipe(map(this.sortByName()));
   }
 
   updateUser(user: User) {
@@ -38,6 +39,12 @@ export class UsersComponent implements OnInit {
       return roles.sort((roleA, roleB) => {
         return roleA.name.localeCompare(roleB.name);
       });
+    };
+  }
+
+  private sortByName() {
+    return (users: User[]) => {
+      return users.sort((userA, userB) => userA.name.localeCompare(userB.name));
     };
   }
 }
