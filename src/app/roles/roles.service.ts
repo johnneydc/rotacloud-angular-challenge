@@ -34,17 +34,19 @@ export class RolesService {
   }
 
   public updateRole(updatedRole: Role): void {
-      const roles = this.roles.value.slice();
-      const indexOfRoleToUpdate = roles.findIndex(role => role.id === updatedRole.id);
+    const roles = this.roles.value.slice();
+    const indexOfRoleToUpdate = roles.findIndex(role => role.id === updatedRole.id);
 
-      roles[indexOfRoleToUpdate] = updatedRole;
+    roles[indexOfRoleToUpdate] = updatedRole;
 
-      this.roles.next(roles);
+    this.roles.next(roles);
   }
 
   getRolesForUser(user: User): Observable<Role[]> {
     return this.getRoles()
-      .pipe(map(roles => this.filterRolesBasedUser(roles, user)));
+      .pipe(
+        map(roles => this.filterRolesBasedUser(roles, user))
+      );
   }
 
   private filterRolesBasedUser(roles: Role[], user: User) {

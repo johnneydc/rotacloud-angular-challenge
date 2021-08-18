@@ -31,15 +31,11 @@ export class UsersComponent implements OnInit {
 
   getRoles(user: User): Observable<Role[]> {
     return this.rolesService.getRolesForUser(user)
-      .pipe(map(this.sortRoles()));
+      .pipe(map(roles => this.sortRoleNames(roles)));
   }
 
-  private sortRoles() {
-    return function (roles: Role[]) {
-      return roles.sort((roleA, roleB) => {
-        return roleA.name.localeCompare(roleB.name);
-      });
-    };
+  private sortRoleNames(roles: Role[]) {
+    return roles.sort((roleA, roleB) => roleA.name.localeCompare(roleB.name));
   }
 
   private sortByName() {
